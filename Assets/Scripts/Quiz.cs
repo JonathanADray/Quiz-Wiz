@@ -30,7 +30,7 @@ public class Quiz : MonoBehaviour
 
     public bool isComplete;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         timer = FindObjectOfType<Timer>();
         scorekeeper = FindObjectOfType<ScoreKeeper>();
@@ -44,7 +44,13 @@ public class Quiz : MonoBehaviour
         timerImage.fillAmount = timer.fillFraction;
         if(timer.loadNextQuestion)
         {
-            hasAnsweredEarly =false;
+            if (progressBar.value == progressBar.maxValue)
+            {
+                isComplete = true;
+                return;
+            }
+
+            hasAnsweredEarly = false;
             GetNextQuestion();
             timer.loadNextQuestion = false;
         }
@@ -84,10 +90,7 @@ public class Quiz : MonoBehaviour
         timer.CancelTimer();
         scoreText.text = "Score: " + scorekeeper.CalculateScore() + "%";
 
-        if(progressBar.value == progressBar.maxValue)
-        {
-            isComplete = true;
-        }
+
     }
 
     void GetNextQuestion()
