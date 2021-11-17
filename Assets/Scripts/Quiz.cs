@@ -24,7 +24,6 @@ public class Quiz : MonoBehaviour
     void Start()
     {
         timer = FindObjectOfType<Timer>();
-        //GetNextQuestion();
     }
 
     void Update() 
@@ -73,10 +72,13 @@ public class Quiz : MonoBehaviour
 
     void GetNextQuestion()
     {
-        SetButtonState(true);
-        SetDefaultButtonSprites();
-        GetRandomQuestion();
-        DisplayQuestion();
+        if(questions.Count >0)
+        {
+            SetButtonState(true);
+            SetDefaultButtonSprites();
+            GetRandomQuestion();
+            DisplayQuestion();
+        }
     }
 
     void GetRandomQuestion()
