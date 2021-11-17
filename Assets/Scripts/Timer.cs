@@ -48,7 +48,7 @@ public class Timer : MonoBehaviour
             else
             {
                 isAnsweringQuestion = true;
-                timerValue = timeToShowCorrectAnswer;
+                timerValue = timeToCompleteQuestion;
                 loadNextQuestion = true;
             }
         }

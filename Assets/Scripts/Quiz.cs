@@ -23,7 +23,7 @@ public class Quiz : MonoBehaviour
     void Start()
     {
         timer = FindObjectOfType<Timer>();
-        GetNextQuestion();
+        //GetNextQuestion();
     }
 
     void Update() 
@@ -31,20 +31,25 @@ public class Quiz : MonoBehaviour
         timerImage.fillAmount = timer.fillFraction;
         if(timer.loadNextQuestion)
         {
+            hasAnsweredEarly =false;
             GetNextQuestion();
             timer.loadNextQuestion = false;
         }
         else if(!hasAnsweredEarly && !timer.isAnsweringQuestion)
         {
-
+            DisplayAnswer(-1);
+            SetButtonState(false);
         }
     }
-    public void OnAnswerSelected(int index)
+
+    void DisplayAnswer(int index)
     {
-        Image buttonImage = answerButtons[index].GetComponent<Image>();
+        Image buttonImage;
+        
         if(index ==question.GetCorrectAnswerIndex())
         {
             questionText.text = "Correct!";
+            buttonImage = answerButtons[index].GetComponent<Image>();
             buttonImage.sprite = correctAnswerSprite;
         }
         else
@@ -55,6 +60,12 @@ public class Quiz : MonoBehaviour
             buttonImage = answerButtons[correctAnswerIndex].GetComponent<Image>();
             buttonImage.sprite = correctAnswerSprite;
         }
+    }
+
+    public void OnAnswerSelected(int index)
+    {
+        hasAnsweredEarly =true;
+        DisplayAnswer(index);
         SetButtonState(false);
         timer.CancelTimer();
     }
